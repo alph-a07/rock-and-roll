@@ -23,14 +23,36 @@ const switchPlayer = function () {
 };
 
 // - Initital conditions
-score0.textContent = 0;
-score1.textContent = 0;
-const scores = [0, 0]; // Array of total scores
-dice.classList.add('hidden');
+let scores; // Array of total scores
+let activePlayer;
+let currentScore; // Current score of the active player
+let isGameOn;
 
-let activePlayer = 0;
-let currentScore = 0; // Current score of the active player
-let isGameOn = true;
+const init = function () {
+    // Set all scores to zero
+    score0.textContent = 0;
+    score1.textContent = 0;
+    document.getElementById(`current--0`).textContent = 0;
+    document.getElementById(`current--1`).textContent = 0;
+    scores = [0, 0];
+    currentScore = 0;
+
+    dice.classList.add('hidden');
+
+    // Remove if any winner decorations
+    document.querySelector(`.player--0`).classList.remove('player--winner');
+    document.querySelector(`.player--1`).classList.remove('player--winner');
+
+    // Make first player active
+    activePlayer = 0;
+    document.querySelector('.player--0').classList.add('player--active');
+    document.querySelector('.player--1').classList.remove('player--active');
+
+    // GAME ON AGAIN
+    isGameOn = true;
+};
+
+init();
 
 // - Rolling dice functionality
 btnRoll.addEventListener('click', function () {
@@ -77,3 +99,6 @@ btnHold.addEventListener('click', function () {
         }
     }
 });
+
+// - Resetting game functionality
+btnNewGame.addEventListener('click', init);
